@@ -5,10 +5,10 @@ Prosty komunikator oparty na architekturze klient-serwer. Serwer wielowątkowo (
  Jak uruchomić projekt
 
 Dla testów wszystkie kroki wykonaj lokalnie (host `127.0.0.1` w kodzie).
-
+```bash
 1. Start Serwera (Terminal)
 Otwórz terminal w folderze z projektem i wpisz:
-```bash
+
 python serwer.py
 2. Start Klienta (GUI):
 Otwórz nowe, osobne okno terminala i wpisz:
