@@ -14,23 +14,23 @@ class ChatClient:
         self.port = port
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         
-        # TWORZYMY TYLKO JEDNO GŁÓWNE OKNO
+
         self.root = tk.Tk()
         self.root.title("Logowanie do Czatu")
         self.root.geometry("350x180")
         self.root.resizable(False, False)
         
-        # Co się stanie, gdy użytkownik zamknie okno 'X'
+
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
         
-        # Ramki na poszczególne widoki
+
         self.login_frame = None
         self.chat_frame = None
         
-        # Odpalamy widok logowania na starcie
+
         self.setup_login_gui()
         
-        # Uruchamiamy główną pętlę graficzną (uruchamiana tylko RAZ!)
+ 
         self.root.mainloop()
 
     def setup_login_gui(self):
@@ -43,7 +43,7 @@ class ChatClient:
         
         self.nick_entry = tk.Entry(self.login_frame, font=("Arial", 11), width=25)
         self.nick_entry.pack(pady=5)
-        # Pozwala zalogować się używając klawisza Enter
+
         self.nick_entry.bind("<Return>", lambda event: self.connect_to_server()) 
         self.nick_entry.focus()
         
@@ -62,20 +62,20 @@ class ChatClient:
             self.client.connect((self.host, self.port))
         except ConnectionRefusedError:
             messagebox.showerror("Błąd połączenia", "Nie można połączyć się z serwerem.\nUpewnij się, że serwer jest włączony.")
-            return # Zamiast zamykać program, pozwalamy spróbować ponownie
+            return 
             
-        # Zmiana widoku: niszczymy TYLKO panel logowania, główne okno zostaje!
+
         self.login_frame.destroy()
         
-        # Zmieniamy parametry okna na takie pod czat
+
         self.root.geometry("500x600")
         self.root.resizable(True, True)
         self.root.title(f"Aplikacja Czat - Połączono jako: {self.nickname}")
         
-        # Rysujemy panel czatu
+
         self.setup_main_gui()
         
-        # Startujemy wątek do odbioru wiadomości
+
         self.receive_thread = threading.Thread(target=self.receive_messages, daemon=True)
         self.receive_thread.start()
 
@@ -121,7 +121,7 @@ class ChatClient:
         """Wrzucenie zadania do poprawnej pętli głównego okna."""
         clean_msg = message.strip()
         if clean_msg:
-            # Teraz self.root.after ZAWSZE zadziała
+
             self.root.after(0, self._insert_message, clean_msg)
 
     def _insert_message(self, clean_msg):
